@@ -19,7 +19,7 @@ if (Meteor.isServer) {
     Meteor.methods({
         getServerTime: function () {
             var _time = (new Date).toTimeString();
-            console.log(_time);
+            // console.log(_time);
             return _time;
         }
     });
