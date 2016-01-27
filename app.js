@@ -88,10 +88,24 @@ function findWinner() {
 
 function changeMusic(_id) {
 	console.log("change music to " + Music.findOne(_id).name);
-
-
 	
+	resetCollections();
 }
+
+function resetCollections() {
+	var music = Music.find();
+
+	music.forEach(function(item) {
+		var id = item._id;
+		
+		Music.update(id, {
+			$set: {votes: 0}
+		});
+	});
+	
+	CurrentSelection.remove({});
+}
+
 
 
 if (Meteor.isClient) {
@@ -147,6 +161,10 @@ function updateCurrentSelected(playerId) {
 	if (currentSelection) {
 		oldId =  currentSelection.newId;
 
+		if (oldId == playerId) {
+			return;
+		}
+		
 		CurrentSelection.update(currentSelection._id, {$set: {oldId: oldId}});
 		CurrentSelection.update(currentSelection._id, {$set: {newId: playerId}});
 	}
