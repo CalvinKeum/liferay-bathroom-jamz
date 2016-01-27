@@ -49,9 +49,9 @@ if (Meteor.isServer) {
 				Music.insert(musicObjects[i]);
 			}
 		}
-		
+
 		CurrentSelection.remove({});
-	
+
 	});
 }
 
@@ -64,13 +64,11 @@ if (Meteor.isClient) {
 			var id = item._id;
 
 			if (playerId === oldId) {
-				console.log(oldId);
 				Music.update(id, {
 					$inc: {votes: -1}
 				});
 			}
 			else if (playerId === newId) {
-				console.log(newId);
 				Music.update(id, {
 					$inc: {votes: 1}
 				});
@@ -79,13 +77,16 @@ if (Meteor.isClient) {
 	}
 
 	Template.bodyTemplate.helpers({
-		score: function () {
+		sorted: function () {
 			return Music.find(
 				{},
 				{
 					sort: { votes: -1 }
 				}
 			);
+		},
+		unsorted: function() {
+			return Music.find();
 		}
 	});
 
@@ -111,7 +112,7 @@ function updateCurrentSelected(playerId) {
 		if (oldId == playerId) {
 			return;
 		}
-		
+
 		CurrentSelection.update(currentSelection._id, {$set: {oldId: oldId}});
 		CurrentSelection.update(currentSelection._id, {$set: {newId: playerId}});
 	}
@@ -125,4 +126,4 @@ function updateCurrentSelected(playerId) {
 	}
 
 	updateVotes(newId, oldId);
-} 
+}

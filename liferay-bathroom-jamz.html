@@ -20,7 +20,7 @@
 	{{#if currentUser}}
 		{{> bodyTemplate}}
 		{{> currentInfo}}
-	{{else}}	
+	{{else}}
 		<h1>Please login.</h1>
 	{{/if}}
 </body>
@@ -30,7 +30,7 @@
 		<div class="col-md-6 genre-options">
 			<form id="genreList">
 				<ul class="list-group">
-					{{#each score}}
+					{{#each unsorted}}
 						{{> genreOption}}
 					{{/each}}
 				</ul>
@@ -39,7 +39,7 @@
 		</div>
 		<div class="col-md-6 genre-next-up">
 			<ul class="list-group">
-				{{#each score}}
+				{{#each sorted}}
 					{{> nextUp}}
 				{{/each}}
 			</ul>
@@ -50,10 +50,10 @@
 <template name="currentInfo">
 	<div class="row">
 		<div class="col-md-12 gutter">
-			Current Time: {{time}} 
+			Current Time: {{time}}
 			<br />
 
-			Currently Playing: 
+			Currently Playing:
 		</div>
 	</div>
 </template>
